@@ -7,3 +7,7 @@
 /CoreDemoSolution.Data/obj
 /CoreDemoSolution.Data/bin/Debug/netcoreapp2.1
 /CoreDemoSolution.Repository/bin/Debug/netcoreapp2.1
+/CoreDemoSolution.Web/bin/Debug/netcoreapp2.1
+/CoreDemoSolution.Web/obj
+/CoreDemoSolution.Web/wwwroot
+/.vs/config
