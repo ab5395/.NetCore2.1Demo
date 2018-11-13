@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
     @RenderSection("Styles", false)
+
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -50,6 +51,7 @@
             <p>&copy; 2018 - CoreDemoSolution.Web</p>
         </footer>
     </div>
+    <div id="snackbar">Some text some message..</div>
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -71,6 +73,15 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
+
+    <script>
+        function myFunction(message) {
+            var x = document.getElementById("snackbar");
+            x.className = "show";
+            $("#snackbar").text(message);
+            setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+        }
+    </script>
 
     @RenderSection("Scripts", required: false)
 </body>

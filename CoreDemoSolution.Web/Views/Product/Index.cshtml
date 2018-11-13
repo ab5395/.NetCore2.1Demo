@@ -8,7 +8,7 @@
 
 <h2>Product List</h2>
 <button id="btnAddProductPopUp">Add Product</button>
-
+<button onclick="myFunction()">Show Snackbar</button>
 <!-- begin::Modal -->
 <div class="modal fade" id="divModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -34,16 +34,10 @@
             if ($("#formProduct").valid()) {
                 $.post("/Product/AddUpdateProduct", $("#formProduct").serialize()).done(function (data) {
                     debugger;
-                    //if (data.Status === true) {
-                    //    datatable.destroy();
-                    //    $("#divModal").modal('hide');
-                    //    bindTenantList();
-                    //} else {
-                    //    toastr.error(data.message);
-                    //    if (data.message.indexOf("exist.") > 0) {
-                    //        $("#divModal").modal('hide');
-                    //    }
-                    //}
+                    if (data.status === true) {
+                        $("#divModal").modal('hide'); 
+                    } 
+                    myFunction(data.message);
                 });
             } else {
                 return;
