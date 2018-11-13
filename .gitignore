@@ -5,3 +5,5 @@
 /.vs/CoreDemoSolution
 /CoreDemoSolution.Repository/obj
 /CoreDemoSolution.Data/obj
+/CoreDemoSolution.Data/bin/Debug/netcoreapp2.1
+/CoreDemoSolution.Repository/bin/Debug/netcoreapp2.1
