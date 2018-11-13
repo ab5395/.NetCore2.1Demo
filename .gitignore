@@ -3,3 +3,5 @@
 ################################################################################
 
 /.vs/CoreDemoSolution
+/CoreDemoSolution.Repository/obj
+/CoreDemoSolution.Data/obj
