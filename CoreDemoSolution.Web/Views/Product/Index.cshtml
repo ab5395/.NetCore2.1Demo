@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+@section Styles{
+    <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+}
+
+<h2>Product List</h2>
+<button id="btnAddProductPopUp">Add Product</button>
+
+<!-- begin::Modal -->
+<div class="modal fade" id="divModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div id="myModalContent">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end::Modal -->
+
+@section scripts{
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).on("click", "#btnClose", function () {
+            $('#divModal').modal('hide');
+        });
+
+        $(document).on("click", "#btnProduct", function () {
+            debugger;
+            $.validator.unobtrusive.parse($('#formProduct'));
+            if ($("#formProduct").valid()) {
+                $.post("/Product/AddUpdateProduct", $("#formProduct").serialize()).done(function (data) {
+                    debugger;
+                    //if (data.Status === true) {
+                    //    datatable.destroy();
+                    //    $("#divModal").modal('hide');
+                    //    bindTenantList();
+                    //} else {
+                    //    toastr.error(data.message);
+                    //    if (data.message.indexOf("exist.") > 0) {
+                    //        $("#divModal").modal('hide');
+                    //    }
+                    //}
+                });
+            } else {
+                return;
+            }
+        });
+
+        $(document).on("click", "#btnAddProductPopUp", function () {
+            $("#myModalContent").html("");
+            $("#myModalContent").load("@Url.Action("AddUpdateProduct", "Product")?productId=" + 0);
+            $("#divModal").modal('show');
+            //unblock();
+        });
+
+    </script>
+}

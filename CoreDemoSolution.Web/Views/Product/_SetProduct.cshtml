@@ -1,0 +1,48 @@
+﻿@model CoreDemoSolution.Repository.Models.ProductModel
+
+<div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">
+        Product
+    </h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">
+            &times;
+        </span>
+    </button>
+</div>
+@using (Html.BeginForm("", "", FormMethod.Post, new { id = "formProduct" }))
+{
+    <div class="modal-body">
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "form-control-label" }) <span class="m--font-danger">*</span>
+                <div class="my-input a-my-input-parent">
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control  m-input m-input--square m-input--solid" })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "form-control-label" }) <span class="m--font-danger">*</span>
+                <div class="my-input a-my-input-parent">
+                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control  m-input m-input--square m-input--solid" })
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "form-control-label" }) <span class="m--font-danger">*</span>
+                <div class="my-input a-my-input-parent">
+                    @Html.TextBoxFor(model => model.Price, new { @class = "form-control  m-input m-input--square m-input--solid" })
+                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="btnProduct" class="btn btn-brand">Submit</button>
+        <button type="button" id="btnClose" class="btn btn-danger" data-dismiss="modal">Close</button>
+    </div>
+}

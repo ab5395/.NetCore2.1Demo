@@ -13,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using CoreDemoSolution.Data;
 using CoreDemoSolution.Data.Classes;
+using CoreDemoSolution.Repository.Interfaces;
+using CoreDemoSolution.Repository.Repositories;
 
 namespace CoreDemoSolution.Web
 {
@@ -48,6 +50,8 @@ namespace CoreDemoSolution.Web
                 options.Password.RequireDigit = false;
             }).AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.AddScoped<IProductRepository, ProductRepository>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -75,7 +79,7 @@ namespace CoreDemoSolution.Web
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Product}/{action=Index}/{id?}");
             });
         }
     }
