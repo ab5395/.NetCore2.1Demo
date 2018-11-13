@@ -3,6 +3,7 @@
 namespace CoreDemoSolution.Data
 {
     using System;
+    using System.Data;
     using CoreDemoSolution.Data.Classes;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
@@ -32,6 +33,8 @@ namespace CoreDemoSolution.Data
             var connectionString = @"Data Source=" + server + ";Initial Catalog=" + databaseName + ";Integrated Security=True ;user id=" + databaseUser + ";password=" + databasePass;
             return connectionString;
         }
+
+        public DbSet<Product> Products { get; set; }
 
     }
 }
