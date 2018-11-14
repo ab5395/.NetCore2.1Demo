@@ -5,31 +5,32 @@
 @section Styles{
     <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
 }
-
 <div class="container">
-    <h2>Products</h2>
-    <div class="panel-group">
-        <div class="panel panel-primary">
+    <h4>Products</h4>
+    <div class="panel-group custom-panel">
+        <div class="panel">
             <div class="panel-heading">
-                Product List
+                <div class="pull-left title-c">Product List</div>
+                <button id="btnAddProductPopUp"  class="btn btn-primary pull-right">Add Product</button>
+                <div class="clearfix"></div>
             </div>
             <div class="panel-body">
-                <button id="btnAddProductPopUp" style="float: right;" class="btn btn-primary">Add Product</button>
+                
                 <table id="tblProduct">
                     <thead>
                         <tr>
-                            <td>
+                            <th>
                                 Id
-                            </td>
-                            <td>
+                            </th>
+                            <th>
                                 Name
-                            </td>
-                            <td>
+                            </th>
+                            <th>
                                 Price
-                            </td>
-                            <td>
+                            </th>
+                            <th style="width:10%;">
                                 Action
-                            </td>
+                            </th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -38,8 +39,8 @@
         </div>
     </div>
     <!-- begin::Modal -->
-    <div class="modal fade" id="divModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+    <div class="modal fade " id="divModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg custom-modal">
             <div class="modal-content">
                 <div id="myModalContent">
                 </div>
@@ -111,8 +112,8 @@
                     { "data": "Price", "name": "Price", "autoWidth": true },
                     {
                         data: null, render: function (data, type, row) {
-                            return "<a href='#' class='btn btn-primary' onclick=Edit('" + row.ProductId + "'); >Edit</a>" +
-                                "<a href='#' class='btn btn-danger' onclick=Delete('" + row.ProductId + "'); >Delete</a>";
+                            return "<div class='action-btn'><a href='#' class='btn btn-primary mx-5px' onclick=Edit('" + row.ProductId + "'); >Edit</a>" +
+                                "<a href='#' class='btn btn-danger mx-5px' onclick=Delete('" + row.ProductId + "'); >Delete</a></div>";
                         }
                     }
                 ]

@@ -3,6 +3,9 @@ for details on configuring this project to bundle and minify static web assets. 
 body {
     padding-top: 50px;
     padding-bottom: 20px;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif !important;
+    background-color: #eef5f9;
 }
 
 /* Wrapping element */
@@ -35,9 +38,87 @@ body {
         display: none;
     }
 }
+.menu {
+    background-color: #28bebd;
+}
+    .menu .navbar-brand {
+        color:#fff !important;
+    }
+.menu .nav li a{
+    color:#fff;
+}
+.custom-panel .panel {
+    border-radius: 0 !important;
+    border-color: #dedede;
+}
+.custom-panel .panel-heading {
+    background-color: #28bebd;
+    border-color: #28bebd;
+    border-radius: 0 !important;
+}
+    .custom-panel .panel-heading .title-c {
+        color: #fff;
+        line-height: 26px;
+    }
+.btn-primary {
+    font-size: 13px !important;
+    background-color: #1c2732 !important;
+    border-color: #1c2732 !important;
+}
+.dataTable thead tr th {
+    background-color: #DEDEDE !important;
+    color: #1c2732 !important;
+    font-weight: 400 !important;
+}
+.dataTable thead tr th, .dataTable tr td {
+    border-right: 1px solid #eee !important;
+    border-bottom: 1px solid #eee !important;
+    font-size:13px !important;
+}
+.dataTable{
+    border:1px solid #eee;
+}
+.mx-5px {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.btn {
+    font-size: 12px !important;
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+}
+label{
+    font-weight:500 !important;
+}
+.action-btn{
+    width:14rem;
+}
+.dataTables_length label{
+    font-weight:500 !important;
+}
+#tblProduct_filter input{
+    border:1px solid #dedede !important;
 
-
-
+}
+.dataTables_info{
+    font-size:13px !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    background: #28bebd !important;
+    border-color: #28bebd !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 4px 12px !important;
+}
+.custom-modal .modal-header {
+    background-color: #28bebd;
+}
+.custom-modal .modal-header .modal-title{
+    color:#fff;
+}
+.custom-modal .modal-content {
+    border-radius: 0px !important;
+}
 
 
 
