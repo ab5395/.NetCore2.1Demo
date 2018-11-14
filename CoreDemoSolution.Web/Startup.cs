@@ -15,6 +15,7 @@ using CoreDemoSolution.Data;
 using CoreDemoSolution.Data.Classes;
 using CoreDemoSolution.Repository.Interfaces;
 using CoreDemoSolution.Repository.Repositories;
+using Newtonsoft.Json.Serialization;
 
 namespace CoreDemoSolution.Web
 {
@@ -52,7 +53,14 @@ namespace CoreDemoSolution.Web
 
             services.AddScoped<IProductRepository, ProductRepository>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddJsonOptions(options => {
+                var resolver = options.SerializerSettings.ContractResolver;
+                if (resolver != null)
+                {
+                    var res = (DefaultContractResolver)resolver;
+                    res.NamingStrategy = null;
+                }
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

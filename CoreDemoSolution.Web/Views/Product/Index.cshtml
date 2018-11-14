@@ -9,6 +9,32 @@
 <h2>Product List</h2>
 <button id="btnAddProductPopUp">Add Product</button>
 <button onclick="myFunction()">Show Snackbar</button>
+
+<div>
+    <table id="tblProduct">
+        <thead>
+            <tr>
+                <td>
+                    Id
+                </td>
+                <td>
+                    Name
+                </td>
+                <td>
+                    Price
+                </td>
+                <td>
+                    Edit
+                </td>
+                <td>
+                    Delete
+                </td>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
 <!-- begin::Modal -->
 <div class="modal fade" id="divModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -24,20 +50,23 @@
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <partial name="_ValidationScriptsPartial" />
     <script>
+        $(document).ready(function () {
+            bindProductList();
+        });
+
         $(document).on("click", "#btnClose", function () {
             $('#divModal').modal('hide');
         });
 
         $(document).on("click", "#btnProduct", function () {
-            debugger;
             $.validator.unobtrusive.parse($('#formProduct'));
             if ($("#formProduct").valid()) {
                 $.post("/Product/AddUpdateProduct", $("#formProduct").serialize()).done(function (data) {
-                    debugger;
-                    if (data.status === true) {
-                        $("#divModal").modal('hide'); 
-                    } 
-                    myFunction(data.message);
+                    if (data.Status === true) {
+                        $("#divModal").modal('hide');
+                        bindProductList();
+                    }
+                    myFunction(data.Message);
                 });
             } else {
                 return;
@@ -48,8 +77,69 @@
             $("#myModalContent").html("");
             $("#myModalContent").load("@Url.Action("AddUpdateProduct", "Product")?productId=" + 0);
             $("#divModal").modal('show');
-            //unblock();
         });
+
+
+
+        function bindProductList() {
+            if ($.fn.DataTable.isDataTable("#tblProduct")) {
+                $("#tblProduct").dataTable().fnDestroy();
+            }
+            $("#tblProduct").DataTable({
+                "processing": true, // for show progress bar
+                "serverSide": true, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "ajax": {
+                    "url": "/Product/GetProductList",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columnDefs":
+                    [{
+                        "targets": [0],
+                        "visible": false,
+                        "searchable": false
+                    }],
+                "columns": [
+                    { "data": "ProductId", "name": "ProductId", "autoWidth": true },
+                    { "data": "Name", "name": "Name", "Name": true },
+                    { "data": "Price", "name": "Price", "autoWidth": true },
+                    {
+                        data: null, render: function (data, type, row) {
+                            return "<a href='#' class='btn btn-primary' onclick=Edit('" + row.ProductId + "'); >Edit</a>";
+                        }
+                    },
+                    {
+                        data: null, render: function (data, type, row) {
+                            return "<a href='#' class='btn btn-danger' onclick=Delete('" + row.ProductId + "'); >Delete</a>";
+                        }
+                    },
+                ]
+            });
+
+        }
+
+        function Edit(id) {
+            $("#myModalContent").html("");
+            $("#myModalContent").load("@Url.Action("AddUpdateProduct", "Product")?productId=" + id);
+            $("#divModal").modal('show');
+        }
+
+        function Delete(id) {
+             $.ajax({
+                 url: "@Url.Action("DeleteProduct", "Product")?id=" + id,
+                 dataType: "json",
+                 type: 'Get',
+                 success: function (data) {
+                     if (data.Status === true) {
+                         bindProductList();
+                     }
+                     myFunction(data.Message);
+                 }
+             });
+        }
+
 
     </script>
 }
