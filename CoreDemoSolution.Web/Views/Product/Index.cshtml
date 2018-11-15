@@ -11,11 +11,10 @@
         <div class="panel">
             <div class="panel-heading">
                 <div class="pull-left title-c">Product List</div>
-                <button id="btnAddProductPopUp"  class="btn btn-primary pull-right">Add Product</button>
+                <button id="btnAddProductPopUp" class="btn btn-primary pull-right">Add Product</button>
                 <div class="clearfix"></div>
             </div>
             <div class="panel-body">
-                
                 <table id="tblProduct">
                     <thead>
                         <tr>
@@ -66,10 +65,14 @@
         $(document).on("click", "#btnProduct", function () {
             $.validator.unobtrusive.parse($('#formProduct'));
             if ($("#formProduct").valid()) {
+                $("#divModal").modal('hide');
+                showLoader();
                 $.post("/Product/AddUpdateProduct", $("#formProduct").serialize()).done(function (data) {
+                    hideLoader();
                     if (data.Status === true) {
-                        $("#divModal").modal('hide');
                         bindProductList();
+                    } else {
+                        $("#divModal").modal('show');
                     }
                     myFunction(data.Message);
                 });
@@ -128,17 +131,19 @@
         }
 
         function Delete(id) {
-             $.ajax({
-                 url: "@Url.Action("DeleteProduct", "Product")?id=" + id,
-                 dataType: "json",
-                 type: 'Get',
-                 success: function (data) {
-                     if (data.Status === true) {
-                         bindProductList();
-                     }
-                     myFunction(data.Message);
-                 }
-             });
+            showLoader();
+            $.ajax({
+                url: "@Url.Action("DeleteProduct", "Product")?id=" + id,
+                dataType: "json",
+                type: 'Get',
+                success: function (data) {
+                    hideLoader();
+                    if (data.Status === true) {
+                        bindProductList();
+                    }
+                    myFunction(data.Message);
+                }
+            });
         }
 
 

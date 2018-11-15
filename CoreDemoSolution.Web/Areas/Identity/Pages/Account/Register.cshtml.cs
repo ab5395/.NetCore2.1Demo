@@ -10,6 +10,12 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using CoreDemoSolution.Repository.Utility;
+using CoreDemoSolution.Repository.Models;
+using Microsoft.AspNetCore.Http;
+using System.Web;
+using System.IO;
 
 namespace CoreDemoSolution.Web.Areas.Identity.Pages.Account
 {
@@ -20,17 +26,25 @@ namespace CoreDemoSolution.Web.Areas.Identity.Pages.Account
         private readonly UserManager<User> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly AppCommon _appCommon;
+        private readonly EmailService _emailService;
+        private readonly IHttpContextAccessor _httpContext;
 
         public RegisterModel(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IHttpContextAccessor httpContext,
+            IOptions<EmailSettings> emailSettings)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _appCommon = new AppCommon();
+            _httpContext = httpContext;
+            _emailService = new EmailService(emailSettings);
         }
 
         [BindProperty]
@@ -95,5 +109,36 @@ namespace CoreDemoSolution.Web.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
+
+        #region Helper Methods
+        private async Task<string> PrepareEmailTemplateAsync(string email, string code, string fullName, string url)
+        {
+            var templateStr = "";
+
+            try
+            {
+                var emailTemplatefile = _appCommon.EmailTemplateFilePath;
+
+                using (var reader = new StreamReader(emailTemplatefile))
+                    templateStr = await reader.ReadToEndAsync();
+            }
+            catch (Exception ex)
+            {
+            }
+
+            var content = "Thanks for signing up with Pyarana! <br>" +
+                "You can verify your email account by clicking on following button.<br><br>";
+            var buttonName = "Confirm Email";
+
+            templateStr =
+               templateStr
+               .Replace("{UserName}", fullName)
+               .Replace("{Mail Content}", content)
+               .Replace("{ConfirmButton}", url)
+                .Replace("{ConfirmButtonText}", buttonName);
+            return templateStr;
+        }
+
+        #endregion
     }
 }

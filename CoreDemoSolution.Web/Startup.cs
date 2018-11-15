@@ -16,6 +16,7 @@ using CoreDemoSolution.Data.Classes;
 using CoreDemoSolution.Repository.Interfaces;
 using CoreDemoSolution.Repository.Repositories;
 using Newtonsoft.Json.Serialization;
+using CoreDemoSolution.Repository.Utility;
 
 namespace CoreDemoSolution.Web
 {
@@ -37,7 +38,7 @@ namespace CoreDemoSolution.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
+            
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -61,6 +62,8 @@ namespace CoreDemoSolution.Web
                     res.NamingStrategy = null;
                 }
             });
+
+            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
